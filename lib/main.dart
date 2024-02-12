@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/quizBrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(MyApp());
 
@@ -53,6 +54,29 @@ class _QuizPageState extends State<QuizPage> {
 
       if (quizBrain.quizEnded()) {
         //display score in alert
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Quiz Ended!",
+          desc:
+              "Your Score: ${quizBrain.score}/${quizBrain.questionBank.length}",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Restart",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                setState(() {
+                  quizBrain = new QuizBrain();
+                  scoreCardIcons = [];
+                });
+              },
+              width: 120,
+            )
+          ],
+        ).show();
         print('quiz ended...!!!');
         return;
       }
